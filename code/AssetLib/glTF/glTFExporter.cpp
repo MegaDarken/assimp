@@ -725,14 +725,14 @@ void glTFExporter::ExportMeshes()
 			comp_o3dgc_params.SetCoordQuantBits(quant_coord);
 			comp_o3dgc_params.SetCoordPredMode(prediction_position);
 			comp_o3dgc_ifs.SetNCoord(aim->mNumVertices);
-			comp_o3dgc_ifs.SetCoord((o3dgc::Real* const)&b->GetPointer()[idx_srcdata_begin]);
+			comp_o3dgc_ifs.SetCoord((o3dgc::Real*)&b->GetPointer()[idx_srcdata_begin]);
 			// Normals
 			if(idx_srcdata_normal != SIZE_MAX)
 			{
 				comp_o3dgc_params.SetNormalQuantBits(quant_normal);
 				comp_o3dgc_params.SetNormalPredMode(prediction_normal);
 				comp_o3dgc_ifs.SetNNormal(aim->mNumVertices);
-				comp_o3dgc_ifs.SetNormal((o3dgc::Real* const)&b->GetPointer()[idx_srcdata_normal]);
+				comp_o3dgc_ifs.SetNormal((o3dgc::Real*)&b->GetPointer()[idx_srcdata_normal]);
 			}
 
 			// Texture coordinates
@@ -745,13 +745,13 @@ void glTFExporter::ExportMeshes()
 				comp_o3dgc_ifs.SetNFloatAttribute(static_cast<unsigned long>(num), aim->mNumVertices);// number of elements.
 				comp_o3dgc_ifs.SetFloatAttributeDim(static_cast<unsigned long>(num), aim->mNumUVComponents[num_tc]);// components per element: aiVector3D => x * float
 				comp_o3dgc_ifs.SetFloatAttributeType(static_cast<unsigned long>(num), o3dgc::O3DGC_IFS_FLOAT_ATTRIBUTE_TYPE_TEXCOORD);
-				comp_o3dgc_ifs.SetFloatAttribute(static_cast<unsigned long>(num), (o3dgc::Real* const)&b->GetPointer()[idx_srcdata_tc[num_tc]]);
+				comp_o3dgc_ifs.SetFloatAttribute(static_cast<unsigned long>(num), (o3dgc::Real*)&b->GetPointer()[idx_srcdata_tc[num_tc]]);
 				comp_o3dgc_ifs.SetNumFloatAttributes(static_cast<unsigned long>(num + 1));
 			}
 
 			// Coordinates indices
 			comp_o3dgc_ifs.SetNCoordIndex(aim->mNumFaces);
-			comp_o3dgc_ifs.SetCoordIndex((IndicesType* const)&b->GetPointer()[idx_srcdata_ind]);
+			comp_o3dgc_ifs.SetCoordIndex((IndicesType*)&b->GetPointer()[idx_srcdata_ind]);
 			// Prepare to encoding
 			comp_o3dgc_params.SetNumFloatAttributes(comp_o3dgc_ifs.GetNumFloatAttributes());
 			if(mProperties->GetPropertyBool("extensions.Open3DGC.binary", true))
